@@ -1,7 +1,7 @@
 package game;
 import javax.swing.JFrame;
-import java.awt.GraphicsEnvironment;
-import java.awt.GraphicsDevice;
+//import java.awt.GraphicsEnvironment;
+//import java.awt.GraphicsDevice;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -10,12 +10,13 @@ public class App {
         window.setResizable(false);
         window.setTitle("Mission Meltdown");
         
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        // key press are not registered in fullscreen soo commenting it out for now, will check it later
+        //GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        //GraphicsDevice gd = ge.getDefaultScreenDevice();
 
         // Set the JFrame to full-screen mode
-        window.setUndecorated(true); // Remove window decorations (title bar, borders)
-        gd.setFullScreenWindow(window); // Make the frame full-screen
+        //window.setUndecorated(true); // Remove window decorations (title bar, borders)
+        //gd.setFullScreenWindow(window); // Make the frame full-screen
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
