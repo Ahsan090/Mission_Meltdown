@@ -1,4 +1,3 @@
-package main;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -6,7 +5,7 @@ import java.awt.Color;
 public class GamePanel extends JPanel {
     // Screen Settings
     
-    final int orignalTileSize = 20; // I Have done 20x20 tile because 30x30 was too big
+    final int orignalTileSize = 30; // I Have done 20x20 tile because 30x30 was too big
     final int tileScale = 2;
     
     final int tileSize = orignalTileSize * tileScale; // This will result in 60x60 tiles
@@ -22,6 +21,4 @@ public class GamePanel extends JPanel {
         this.setDoubleBuffered(true);        
     
     }
-    
-
 }
