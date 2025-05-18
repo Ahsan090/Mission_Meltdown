@@ -1,3 +1,4 @@
+package game;
 import javax.swing.JFrame;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
@@ -22,5 +23,7 @@ public class App {
         
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        gamePanel.startGameThread();
     }
 }
