@@ -1,5 +1,8 @@
 package game;
 import javax.swing.JPanel;
+
+import entity.Player;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,9 +17,9 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalCharacterWidth = 30;
     final int originalCharacterHeight = 44;
 
-    final int CharacterWidth = originalCharacterWidth * upScale;  // 60px
-    final int CharacterHeight = originalCharacterHeight * upScale; // 88px
-    final int tileSize = orignalTileSize * upScale; // This will result in 60x60 tiles
+    public final int characterWidth = originalCharacterWidth * upScale;  // 60px
+    public final int characterHeight = originalCharacterHeight * upScale; // 88px
+    public final int tileSize = orignalTileSize * upScale; // This will result in 60x60 tiles
     final int maxScreenCol = 32;
     final int maxScreenRow = 18;
     final int screenWidth = tileSize * maxScreenCol; // 1920
@@ -27,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
+
+    Player player = new Player(this, keyH);
 
     // player default position & speed (for testing purpose only, will change later)
     int playerX = 200;
@@ -84,15 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update(){
 
-        if(keyH.upPressed == true) {
-            playerY -= playerSpeed;
-        } else if (keyH.downPressed == true) {
-            playerY += playerSpeed;
-        } else if (keyH.leftPressed == true) {
-            playerX -= playerSpeed;
-        } else if (keyH.rightPressed == true) {
-            playerX += playerSpeed;
-        }
+        player.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -100,9 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        // object created to check player movement in game
-        g2.setColor(Color.white);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        player.draw(g2);
         g2.dispose();
     }
 }
