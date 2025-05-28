@@ -17,6 +17,8 @@ public class Player extends Entity {
 
     public final int screenX, screenY;
 
+    int hasKey = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -25,6 +27,9 @@ public class Player extends Entity {
         screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
 
         solidArea = new Rectangle(10, 44, 45, 40);
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -55,10 +60,12 @@ public class Player extends Entity {
             left3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_3-removebg-preview.png"));
             left4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_4-removebg-preview.png"));
 
-            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkright_1-removebg-preview.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkright_2-removebg-preview.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkright_3-removebg-preview.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkright_4-removebg-preview.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right110.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right111.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right112.png"));
+            right4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right113.png"));
+            right5 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right114.png"));
+            right6 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right115.png"));
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -78,8 +85,13 @@ public class Player extends Entity {
                 direction = "right";            
             }
 
+            // Check Tile Collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
+
+            // Check Object Collision;
+            int objindex = gp.cChecker.checkObject(this, true);
+            pickupObject(objindex);
 
             if(collisionOn == false) {
                 switch(direction) {
@@ -99,7 +111,7 @@ public class Player extends Entity {
             }
 
             spriteCounter++;
-            if(spriteCounter > 10) {
+            if(spriteCounter > 7) {
                 if(spriteNum == 1) {
                     spriteNum = 2;
                 } else if(spriteNum == 2) {
@@ -107,10 +119,35 @@ public class Player extends Entity {
                 } else if(spriteNum == 3) {
                     spriteNum = 4;
                 } else if(spriteNum == 4) {
+                    spriteNum = 5;
+                } else if(spriteNum == 5) {
+                    spriteNum = 6;
+                } else if(spriteNum == 6) {
                     spriteNum = 1;
                 }
 
                 spriteCounter = 0;
+            }
+        }
+    }
+
+    public void pickupObject(int i) {
+        if(i != 999) {
+            String objectName = gp.obj[i].name;
+            
+            switch (objectName) {
+                case "Key":
+                    gp.obj[i] = null;
+                    hasKey++;
+                    System.out.println("Key Aquired");
+                    break;
+                case "Ice":
+                    if(hasKey > 0) {
+                        gp.obj[i] = null;
+                        hasKey--;
+                        System.out.println("ICE BROKEN WITH KEY???");
+                        break;
+                    }
             }
         }
     }
@@ -164,6 +201,10 @@ public class Player extends Entity {
                     image = right3;
                 } else if(spriteNum == 4) {
                     image = right4;
+                } else if(spriteNum == 5) {
+                    image = right5;
+                } else if(spriteNum == 6) {
+                    image = right6;
                 }
                 break;
         }
