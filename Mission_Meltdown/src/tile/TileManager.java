@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import game.GamePanel;
+import game.ImageScaling;
 
 public class TileManager {
 
@@ -19,23 +20,56 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[10];
+        tile = new Tile[32];
         mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];
         getTileImage();
         loadMap("/res/maps/map01.txt");
     }
 
     public void getTileImage() {
+        
+        setupTile(0, "000", false);
+        setupTile(1, "000", false);
+        setupTile(2, "000", false);
+        setupTile(3, "000", false);
+        setupTile(4, "000", false);
+        setupTile(5, "000", false);
+        setupTile(6, "000", false);
+        setupTile(7, "000", false);
+        setupTile(8, "000", false);
+        setupTile(9, "000", false);
+        setupTile(10, "001", false);
+        setupTile(11, "002", false);
+        setupTile(12, "snow01", false);
+        setupTile(13, "snow02", false);
+        setupTile(14, "snow03", false);
+        setupTile(15, "003", false);
+        setupTile(16, "004", false);
+        setupTile(17, "005", false);
+        setupTile(18, "018", true);
+        setupTile(19, "019", true);
+        setupTile(20, "020", false);
+        setupTile(21, "021", false);
+        setupTile(22, "022", false);
+        setupTile(23, "023", false);
+        setupTile(24, "024", false);
+        setupTile(25, "025", false);
+        setupTile(26, "026", false);
+        setupTile(27, "027", false);
+        setupTile(28, "028", false);
+        setupTile(29, "029", false);
+        setupTile(30, "030", false);
+        setupTile(31, "031", false);
+    }
+
+    public void setupTile(int index, String imagePath, boolean collision) {
+        ImageScaling imageScale = new ImageScaling();
+
         try {          
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass.png"));
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Ice block.png"));
-
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/wall.png"));
-            tile[2].collision = true;
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/" + imagePath + ".png"));
+            tile[index].image = imageScale.scaledImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
 
         } catch (IOException e) {
             e.getStackTrace();

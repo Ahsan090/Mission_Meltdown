@@ -1,27 +1,30 @@
 package obj;
 
-import java.io.IOException;
+import java.awt.Rectangle;
 
-import javax.imageio.ImageIO;
+import entity.Entity;
+import game.GamePanel;
 
-public class OBJ_Ice extends SuperObject {
+public class OBJ_Ice extends Entity {
 
-    public OBJ_Ice() {
+    public OBJ_Ice(GamePanel gp) {
+        super(gp);
         name = "Ice";
+        down1 = setup("/res/objects/ice block", gp.blockWidth, gp.blockHeight);
 
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/ice block.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        solidArea.x = 0;
+        solidArea = new Rectangle();
+        solidArea.x = 5;
         solidArea.y = 12;
-        solidArea.width = 60;
-        solidArea.height = 60;
-        solidAreaDefaultX = 0;
-        solidAreaDefaultY = 12;
+        solidArea.width = 50;
+        solidArea.height = 40;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         collision = true;
+        isObject = true;
+        objectWidth = gp.blockWidth;
+        objectHeight = gp.blockHeight;
+        objectOffSetX = 0;
+        objectOffSetY = -12;
     }
     
 }

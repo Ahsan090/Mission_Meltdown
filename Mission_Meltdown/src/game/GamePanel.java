@@ -1,13 +1,16 @@
 package game;
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
-import obj.SuperObject;
 import tile.TileManager;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -16,20 +19,25 @@ public class GamePanel extends JPanel implements Runnable {
     final int orignalTileSize = 30; // going 30x30
     final int upScale = 2; // all the images will be scaled to 2x the original image size
 
+    final int originalBlockWidth = 30;
+    final int originalBlockHeight = 36;
+
     final int originalCharacterWidth = 30;
     final int originalCharacterHeight = 44;
 
     public final int characterWidth = originalCharacterWidth * upScale;  // 60px
     public final int characterHeight = originalCharacterHeight * upScale; // 88px
+    public final int blockWidth = originalBlockWidth * upScale; // 60 px
+    public final int blockHeight = originalBlockHeight * upScale; // 72 px
     public final int tileSize = orignalTileSize * upScale; // This will result in 60x60 tiles
 
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 9;
+    public final int maxScreenCol = 19;
+    public final int maxScreenRow = 11;
     public final int screenWidth = tileSize * maxScreenCol; // 1920
     public final int screenHeight = tileSize * maxScreenRow; // 1080
 
-    public final int maxWorldCol = 32;
-    public final int maxWorldRow = 18;
+    public final int maxWorldCol = 92;
+    public final int maxWorldRow = 90;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -37,13 +45,25 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     Thread gameThread;
-    KeyHandler keyH = new KeyHandler();
+    public KeyHandler keyH = new KeyHandler(this);
 
     public Player player = new Player(this, keyH);
     public TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsManager assetsM = new AssetsManager(this);
-    public SuperObject obj[] = new SuperObject[10];
+    public Entity obj[] = new Entity[50];
+    public Entity npc[] = new Entity[10];
+    public EventHandler eHandler = new EventHandler(this);
+    public UI ui = new UI(this);
+
+    ArrayList<Entity> entityList = new ArrayList<>();
+    ArrayList<Entity> iceBlocks = new ArrayList<>();
+
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1;
+    public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     public GamePanel () { //constructor
         
@@ -56,6 +76,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         assetsM.setObject();
+        assetsM.setNPC();
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -99,8 +121,18 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
+        if(gameState == playState) {
+            player.update();
 
-        player.update();
+            for(int i = 0; i < npc.length; i++) {
+                if(npc[i] != null) {
+                    npc[i].update();
+                }
+            }
+        } else if(gameState == pauseState){
+            //pause the game
+        }
+        
     }
 
     public void paintComponent(Graphics g) {
@@ -108,16 +140,45 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        tileM.draw(g2);
+        if(gameState == titleState) {
+            ui.draw(g2);
+        } else {
+            tileM.draw(g2);
 
-        for(int i = 0; i < obj.length; i++) {
-            if(obj[i] != null) {
-                obj[i].draw(g2, this);
+            entityList.add(player);
+
+            for(int i = 0; i < npc.length; i++) {
+                if(npc[i] != null) {
+                    entityList.add(npc[i]);
+                }
             }
+
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null) {
+                    entityList.add(obj[i]);
+                }
+            }
+
+            // now sorting the entities by their y positioning
+            Collections.sort(entityList, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return result;
+                }
+                
+            });
+
+            // and now we can draw the entities in order
+            for(int i = 0; i < entityList.size(); i++) {
+                entityList.get(i).draw(g2);
+            }
+            entityList.clear(); // clearing the list for the next loop
+
+            ui.draw(g2);
         }
-
-        player.draw(g2);
-
         g2.dispose();
     }
 }

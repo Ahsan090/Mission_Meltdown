@@ -4,23 +4,17 @@ package entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import game.GamePanel;
 import game.KeyHandler;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX, screenY;
 
-    int hasKey = 0;
-
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);
@@ -36,39 +30,41 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 16;
-        worldY = gp.tileSize * 9;
+        worldX = gp.tileSize * 20;
+        worldY = gp.tileSize * 74;
         speed = 4;
         direction = "down";
     }
 
     public void getPlayerImage() { // loaded all the sprites (these files are currently for testing purpose only, will change)
         
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkup_1-removebg-preview.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkup_2-removebg-preview.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkup_3-removebg-preview.png"));
-            up4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkup_4-removebg-preview.png"));
+        up1 = setupPlayer("/res/player/player_walkup_1-removebg-preview");
+        up2 = setupPlayer("/res/player/player_walkup_2-removebg-preview");
+        up3 = setupPlayer("/res/player/player_walkup_3-removebg-preview");
+        up4 = setupPlayer("/res/player/player_walkup_4-removebg-preview");
+        up5 = up4;
+        up6 = up1;
 
-            down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_down_2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_down_3.png"));
-            down4 = down2;
+        down1 = setupPlayer("/res/player/player_down_1");
+        down2 = setupPlayer("/res/player/player_down_2");
+        down3 = setupPlayer("/res/player/player_down_3");
+        down4 = down2;
+        down5 = down3;
+        down6 = down1;
 
-            left1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_1-removebg-preview.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_2-removebg-preview.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_3-removebg-preview.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_walkleft_4-removebg-preview.png"));
+        left1 = setupPlayer("/res/player/player_walkleft_1-removebg-preview");
+        left2 = setupPlayer("/res/player/player_walkleft_2-removebg-preview");
+        left3 = setupPlayer("/res/player/player_walkleft_3-removebg-preview");
+        left4 = setupPlayer("/res/player/player_walkleft_4-removebg-preview");
+        left5 = left4;
+        left6 = left1;
 
-            right1 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right110.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right111.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right112.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right113.png"));
-            right5 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right114.png"));
-            right6 = ImageIO.read(getClass().getResourceAsStream("/res/player/player_right115.png"));
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
+        right1 = setupPlayer("/res/player/player_right110");
+        right2 = setupPlayer("/res/player/player_right111");
+        right3 = setupPlayer("/res/player/player_right112");
+        right4 = setupPlayer("/res/player/player_right113");
+        right5 = setupPlayer("/res/player/player_right114");
+        right6 = setupPlayer("/res/player/player_right115");
     }
 
     public void update() {
@@ -89,9 +85,16 @@ public class Player extends Entity {
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
-            // Check Object Collision;
-            int objindex = gp.cChecker.checkObject(this, true);
-            pickupObject(objindex);
+            // Check Object Collision
+            int objIndex = gp.cChecker.checkObject(this, true);
+            objectInteraction(objIndex);
+
+            // Check NPC Collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            npcInteraction(npcIndex);
+
+            // Check Event
+            gp.eHandler.checkEvent();
 
             if(collisionOn == false) {
                 switch(direction) {
@@ -128,28 +131,53 @@ public class Player extends Entity {
 
                 spriteCounter = 0;
             }
+        } else if(keyH.spacePressed == true) {
+            switch(direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
         }
     }
 
-    public void pickupObject(int i) {
+    public void objectInteraction(int i) {
         if(i != 999) {
-            String objectName = gp.obj[i].name;
+            // String objectName = gp.obj[i].name;
             
-            switch (objectName) {
-                case "Key":
-                    gp.obj[i] = null;
-                    hasKey++;
-                    System.out.println("Key Aquired");
-                    break;
-                case "Ice":
-                    if(hasKey > 0) {
-                        gp.obj[i] = null;
-                        hasKey--;
-                        System.out.println("ICE BROKEN WITH KEY???");
-                        break;
-                    }
+            // switch (objectName) {
+            //     case "Key":
+            //         gp.obj[i] = null;
+            //         hasKey++;
+            //         gp.ui.showMessage("You got a Key!");
+            //         break;
+            //     case "Ice":
+            //         if(hasKey > 0) {
+            //             gp.obj[i] = null;
+            //             hasKey--;
+            //             System.out.println("ICE BROKEN WITH KEY???");
+            //             break;
+            //         }
+            // }
+        }
+    }
+
+    public void npcInteraction(int i) {
+        if(i != 999) {
+            if(gp.keyH.ePressed == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
             }
         }
+        gp.keyH.ePressed = false;
     }
 
     public void draw(Graphics2D g2) {
@@ -168,6 +196,10 @@ public class Player extends Entity {
                     image = up3;
                 } else if(spriteNum == 4) {
                     image = up4;
+                } else if(spriteNum == 5) {
+                    image = up5;
+                } else if(spriteNum == 6) {
+                    image = up6;
                 }
                 break;
             case "down":
@@ -179,6 +211,10 @@ public class Player extends Entity {
                     image = down3;
                 } else if(spriteNum == 4) {
                     image = down4;
+                } else if(spriteNum == 5) {
+                    image = down5;
+                } else if(spriteNum == 6) {
+                    image = down6;
                 }
                 break;
             case "left":
@@ -190,6 +226,10 @@ public class Player extends Entity {
                     image = left3;
                 } else if(spriteNum == 4) {
                     image = left4;
+                } else if(spriteNum == 5) {
+                    image = left5;
+                } else if(spriteNum == 6) {
+                    image = left6;
                 }
                 break;
             case "right":
