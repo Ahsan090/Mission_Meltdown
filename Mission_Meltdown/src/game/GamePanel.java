@@ -51,13 +51,13 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsManager assetsM = new AssetsManager(this);
-    public Entity obj[] = new Entity[50];
+    public Entity obj[][] = new Entity[92][90];
     public Entity npc[] = new Entity[10];
     public EventHandler eHandler = new EventHandler(this);
     public UI ui = new UI(this);
 
-    ArrayList<Entity> entityList = new ArrayList<>();
-    ArrayList<Entity> iceBlocks = new ArrayList<>();
+    public ArrayList<Entity> entityList = new ArrayList<>();
+    public ArrayList<Entity> projectileList = new ArrayList<>();
 
     public int gameState;
     public final int titleState = 0;
@@ -129,6 +129,8 @@ public class GamePanel extends JPanel implements Runnable {
                     npc[i].update();
                 }
             }
+
+            
         } else if(gameState == pauseState){
             //pause the game
         }
@@ -154,10 +156,18 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null) {
-                    entityList.add(obj[i]);
+                for(int j = 0; j < obj[i].length; j++) {
+                    if(obj[i][j] != null) {
+                        entityList.add(obj[i][j]);
+                    }
                 }
             }
+
+            // for(int i = 0; i < iceBlocks.size(); i++) {
+            //     if(obj[i] != null) {
+            //         entityList.add(iceBlocks.get(i));
+            //     }
+            // }
 
             // now sorting the entities by their y positioning
             Collections.sort(entityList, new Comparator<Entity>() {

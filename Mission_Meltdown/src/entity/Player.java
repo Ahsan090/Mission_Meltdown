@@ -7,11 +7,14 @@ import java.awt.image.BufferedImage;
 
 import game.GamePanel;
 import game.KeyHandler;
+import obj.OBJ_Ice;
 
 public class Player extends Entity {
     KeyHandler keyH;
+    OBJ_Ice ice;
 
     public final int screenX, screenY;
+    int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -21,6 +24,7 @@ public class Player extends Entity {
         screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
 
         solidArea = new Rectangle(10, 44, 45, 40);
+        ice = new OBJ_Ice(gp);
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -131,42 +135,41 @@ public class Player extends Entity {
 
                 spriteCounter = 0;
             }
-        } else if(keyH.spacePressed == true) {
-            switch(direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
-                }
+        } else {
+            standCounter++;
+            if(standCounter == 20) {
+                spriteNum = 1;
+                standCounter = 0;
+            }
         }
+
+        if(gp.keyH.spacePressed == true) {
+            ice.iceInteraction(direction, gp);
+            gp.keyH.spacePressed = false;
+        }
+        // else if(keyH.spacePressed == true) {
+        //     switch(direction) {
+        //             case "up":
+        //                 worldY -= speed;
+        //                 break;
+        //             case "down":
+        //                 worldY += speed;
+        //                 break;
+        //             case "left":
+        //                 worldX -= speed;
+        //                 break;
+        //             case "right":
+        //                 worldX += speed;
+        //                 break;
+        //         }
+        // }
     }
 
     public void objectInteraction(int i) {
         if(i != 999) {
-            // String objectName = gp.obj[i].name;
-            
-            // switch (objectName) {
-            //     case "Key":
-            //         gp.obj[i] = null;
-            //         hasKey++;
-            //         gp.ui.showMessage("You got a Key!");
-            //         break;
-            //     case "Ice":
-            //         if(hasKey > 0) {
-            //             gp.obj[i] = null;
-            //             hasKey--;
-            //             System.out.println("ICE BROKEN WITH KEY???");
-            //             break;
-            //         }
-            // }
+            // something
+        } else {
+            // jja
         }
     }
 

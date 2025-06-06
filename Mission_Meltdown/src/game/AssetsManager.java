@@ -1,8 +1,8 @@
 package game;
 
 import entity.NPC;
-import obj.OBJ_Ice;
 import obj.OBJ_Key;
+import obj.OBJ_Ice;
 
 // import obj.OBJ_Ice;
 // import obj.OBJ_Key;
@@ -17,19 +17,15 @@ public class AssetsManager {
 
     public void setObject() {
         
-        gp.obj[0] = new OBJ_Key(gp);
-        gp.obj[0].worldX = 22 * gp.tileSize;
-        gp.obj[0].worldY = 74 * gp.tileSize;
+        gp.obj[22][74] = new OBJ_Key(gp);
+        gp.obj[22][74].worldX = 22 * gp.tileSize;
+        gp.obj[22][74].worldY = 74 * gp.tileSize;
 
-        gp.obj[1] = new OBJ_Ice(gp);
-        gp.obj[1].worldX = 24 * gp.tileSize;
-        gp.obj[1].worldY = 74 * gp.tileSize;
-        gp.iceBlocks.add(gp.obj[1]);
+        gp.obj[23][77] = new OBJ_Ice(gp);
+        gp.obj[23][77].worldX = 23 * gp.tileSize;
+        gp.obj[23][77].worldY = 77 * gp.tileSize;
 
-        gp.obj[2] = new OBJ_Ice(gp);
-        gp.obj[2].worldX = 24 * gp.tileSize;
-        gp.obj[2].worldY = 78 * gp.tileSize;
-        gp.iceBlocks.add(gp.obj[2]);
+        
     }
 
     public void setNPC() {
