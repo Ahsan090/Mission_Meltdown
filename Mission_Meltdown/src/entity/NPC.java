@@ -10,9 +10,9 @@ public class NPC extends Entity{
     public NPC(GamePanel gp) {
         super(gp);
 
-        speed = 1;
+        speed = 2;
         direction = "down";
-        solidArea = new Rectangle(10, 44, 45, 40);
+        solidArea = new Rectangle(2, 28, 56, 56);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         
@@ -67,13 +67,13 @@ public class NPC extends Entity{
             int i = random.nextInt(100) + 1;
 
             if(i <= 25) {
-                direction = "up";
+                tempDirection = "up";
             } else if(i <= 50) {
-                direction = "down";
+                tempDirection = "down";
             } else if(i <= 75) {
-                direction = "left";
+                tempDirection = "left";
             } else if(i <= 100) {
-                direction = "right";
+                tempDirection = "right";
             }
 
             actionLockCounter = 0;

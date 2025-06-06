@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 //import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -13,17 +14,26 @@ public class Player extends Entity {
     KeyHandler keyH;
     OBJ_Ice ice;
 
+    int playerWorldCol;
+    int playerWorldRow;
+
+    boolean iceInteract = false;
+
     public final int screenX, screenY;
     int standCounter = 0;
+    boolean moving = false;
+    int pixelCounter = 0;
+    // boolean lockMove = false;
+    // int moveLockCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
         this.keyH = keyH;
 
-        screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);
-        screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
+        screenX = (((gp.maxScreenCol/2)) * gp.tileSize);
+        screenY = (((gp.maxScreenRow/2)) * gp.tileSize);
 
-        solidArea = new Rectangle(10, 44, 45, 40);
+        solidArea = new Rectangle(2, 0, 56, 58);
         ice = new OBJ_Ice(gp);
 
         solidAreaDefaultX = solidArea.x;
@@ -74,17 +84,19 @@ public class Player extends Entity {
     public void update() {
         
         if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
+            if(moving == false) {
+                if(keyH.upPressed == true) {
+                    direction = "up";               
+                } else if (keyH.downPressed == true) {
+                    direction = "down";              
+                } else if (keyH.leftPressed == true) {
+                    direction = "left";                
+                } else if (keyH.rightPressed == true) {
+                    direction = "right";            
+                }
 
-            if(keyH.upPressed == true) {
-                direction = "up";               
-            } else if (keyH.downPressed == true) {
-                direction = "down";              
-            } else if (keyH.leftPressed == true) {
-                direction = "left";                
-            } else if (keyH.rightPressed == true) {
-                direction = "right";            
+                moving = true;
             }
-
             // Check Tile Collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
@@ -99,7 +111,30 @@ public class Player extends Entity {
 
             // Check Event
             gp.eHandler.checkEvent();
+        } else if(moving == false) {
+            standCounter++;
+            if(standCounter == 20) {
+                spriteNum = 1;
+                standCounter = 0;
+            }
+        }
 
+        if(moving == true) {
+            // Check Tile Collision
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            // Check Object Collision
+            int objIndex = gp.cChecker.checkObject(this, true);
+            objectInteraction(objIndex);
+
+            // Check NPC Collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            npcInteraction(npcIndex);
+
+            // Check Event
+            gp.eHandler.checkEvent();
+            
             if(collisionOn == false) {
                 switch(direction) {
                     case "up":
@@ -135,16 +170,31 @@ public class Player extends Entity {
 
                 spriteCounter = 0;
             }
-        } else {
-            standCounter++;
-            if(standCounter == 20) {
-                spriteNum = 1;
-                standCounter = 0;
+
+            pixelCounter += speed;
+            if(pixelCounter == 60) {
+                moving = false;
+                pixelCounter = 0;
             }
+            
         }
 
-        if(gp.keyH.spacePressed == true) {
-            ice.iceInteraction(direction, gp);
+        // if(lockMove == true) {
+        //     moveLockCounter++;
+        //     int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+        //     npcInteraction(npcIndex);
+        //     if(moveLockCounter == 10) {
+        //         lockMove = false;
+        //         moveLockCounter = 0;
+        //     }
+        // }
+        // double playerCol = worldX/60.0;
+        // double playerRow = worldY/60.0;
+        // System.out.println("Player Col: " + playerCol + " Player Row: " + playerRow);
+        if(gp.keyH.spacePressed == true &&  moving == false) {
+            playerWorldCol = gp.player.worldX/gp.tileSize;
+            playerWorldRow = gp.player.worldY/gp.tileSize;
+            ice.iceInteraction(direction, playerWorldCol, playerWorldRow, gp);
             gp.keyH.spacePressed = false;
         }
         // else if(keyH.spacePressed == true) {
@@ -252,6 +302,8 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, gp.characterWidth, gp.characterHeight, null);
+        g2.drawImage(image, screenX, screenY - 28, gp.characterWidth, gp.characterHeight, null);
+        g2.setColor(Color.red);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }

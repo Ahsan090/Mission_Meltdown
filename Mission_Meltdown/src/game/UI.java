@@ -53,7 +53,7 @@ public class UI {
         if(gp.gameState == gp.titleState) {
             drawTitleScreen();
         } else if(gp.gameState == gp.playState) {
-            // do what you gotta do
+            drawPlayScreen();
         } else if(gp.gameState == gp.pauseState) {
             drawPauseScreen();
         } else if(gp.gameState == gp.dialogueState) {
@@ -106,6 +106,11 @@ public class UI {
         if(commandNum == 2) {
             g2.drawString(">", x - gp.tileSize, y);
         }
+    }
+    
+    public void drawPlayScreen() {
+        g2.setColor(Color.black);
+        g2.drawString("Player Col: " + gp.player.worldX/60.0 + " Player Row: " + gp.player.worldY/60.0, 50, 60);
     }
 
     public void drawPauseScreen() {

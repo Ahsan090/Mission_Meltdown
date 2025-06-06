@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,7 @@ public class Entity { // a main class for all the entities in our game (i.e the 
 
     public BufferedImage up1, up2, up3, up4, up5, up6, down1, down2, down3, down4, down5, down6, left1, left2, left3, left4, left5, left6, right1, right2, right3, right4, right5, right6;
     public String direction = "down";
+    public String tempDirection = direction;
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -26,6 +28,8 @@ public class Entity { // a main class for all the entities in our game (i.e the 
     public Rectangle solidArea;
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn;
+    public boolean npcMoving = false;
+    public int pixelCounter = 0;
 
     public String dialogue[] = new String[20];
     public int dialogueIndex = 0;
@@ -76,6 +80,11 @@ public class Entity { // a main class for all the entities in our game (i.e the 
     public void update() {
         
         setAction();
+        pixelCounter += speed;
+        if(pixelCounter == 60) {
+            direction = tempDirection;
+            pixelCounter = 0;
+        }
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
@@ -83,20 +92,19 @@ public class Entity { // a main class for all the entities in our game (i.e the 
         gp.cChecker.checkPlayer(this);
 
         if(collisionOn == false) {
-                switch(direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
-                }
+            switch(direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
             }
 
             spriteCounter++;
@@ -117,6 +125,7 @@ public class Entity { // a main class for all the entities in our game (i.e the 
 
                 spriteCounter = 0;
             }
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -194,8 +203,12 @@ public class Entity { // a main class for all the entities in our game (i.e the 
             }
             if(isObject == true) {
                 g2.drawImage(image, screenX + objectOffSetX, screenY + objectOffSetY, objectWidth, objectHeight, null);
+                g2.setColor(Color.red);
+                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
             } else {
                 g2.drawImage(image, screenX, screenY, gp.characterWidth, gp.characterHeight, null);
+                g2.setColor(Color.red);
+                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
             }
         }
         

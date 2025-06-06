@@ -25,6 +25,22 @@ public class AssetsManager {
         gp.obj[23][77].worldX = 23 * gp.tileSize;
         gp.obj[23][77].worldY = 77 * gp.tileSize;
 
+        gp.obj[22][77] = new OBJ_Ice(gp);
+        gp.obj[22][77].worldX = 22 * gp.tileSize;
+        gp.obj[22][77].worldY = 77 * gp.tileSize;
+
+        gp.obj[24][77] = new OBJ_Ice(gp);
+        gp.obj[24][77].worldX = 24 * gp.tileSize;
+        gp.obj[24][77].worldY = 77 * gp.tileSize;
+
+        gp.obj[26][78] = new OBJ_Ice(gp);
+        gp.obj[26][78].worldX = 26 * gp.tileSize;
+        gp.obj[26][78].worldY = 78 * gp.tileSize;
+
+        gp.obj[22][76] = new OBJ_Ice(gp);
+        gp.obj[22][76].worldX = 22 * gp.tileSize;
+        gp.obj[22][76].worldY = 76 * gp.tileSize;
+
         
     }
 
