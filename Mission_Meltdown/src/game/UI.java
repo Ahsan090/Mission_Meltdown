@@ -111,6 +111,8 @@ public class UI {
     public void drawPlayScreen() {
         g2.setColor(Color.black);
         g2.drawString("Player Col: " + gp.player.worldX/60.0 + " Player Row: " + gp.player.worldY/60.0, 50, 60);
+        g2.drawString("Ice Counter: " + gp.player.iceCounter, 50, 100);
+        g2.drawString("Turn: " + gp.player.turn + " Turn Counter: " + gp.player.turnCounter, 50, 140);
     }
 
     public void drawPauseScreen() {

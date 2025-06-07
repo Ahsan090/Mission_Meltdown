@@ -16,13 +16,16 @@ public class Player extends Entity {
 
     int playerWorldCol;
     int playerWorldRow;
-
-    boolean iceInteract = false;
+    public int iceCounter = 0;
+    String playerDirection;
+    public boolean iceInteract = false;
 
     public final int screenX, screenY;
     int standCounter = 0;
     boolean moving = false;
     int pixelCounter = 0;
+    public boolean turn = false;
+    public int turnCounter = 0;
     // boolean lockMove = false;
     // int moveLockCounter = 0;
 
@@ -94,7 +97,6 @@ public class Player extends Entity {
                 } else if (keyH.rightPressed == true) {
                     direction = "right";            
                 }
-
                 moving = true;
             }
             // Check Tile Collision
@@ -112,6 +114,8 @@ public class Player extends Entity {
             // Check Event
             gp.eHandler.checkEvent();
         } else if(moving == false) {
+            turn = true;
+            turnCounter = 0;
             standCounter++;
             if(standCounter == 20) {
                 spriteNum = 1;
@@ -119,7 +123,7 @@ public class Player extends Entity {
             }
         }
 
-        if(moving == true) {
+        if(moving == true && turn == false) {
             // Check Tile Collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
@@ -179,6 +183,15 @@ public class Player extends Entity {
             
         }
 
+        if(turn == true && moving == true) {
+            turnCounter++;
+            moving = false;
+            if(turnCounter == 7) {
+                turn = false;
+                turnCounter = 0;
+            }
+        }
+
         // if(lockMove == true) {
         //     moveLockCounter++;
         //     int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -192,27 +205,13 @@ public class Player extends Entity {
         // double playerRow = worldY/60.0;
         // System.out.println("Player Col: " + playerCol + " Player Row: " + playerRow);
         if(gp.keyH.spacePressed == true &&  moving == false) {
-            playerWorldCol = gp.player.worldX/gp.tileSize;
-            playerWorldRow = gp.player.worldY/gp.tileSize;
-            ice.iceInteraction(direction, playerWorldCol, playerWorldRow, gp);
+            iceInteract = true;
             gp.keyH.spacePressed = false;
         }
-        // else if(keyH.spacePressed == true) {
-        //     switch(direction) {
-        //             case "up":
-        //                 worldY -= speed;
-        //                 break;
-        //             case "down":
-        //                 worldY += speed;
-        //                 break;
-        //             case "left":
-        //                 worldX -= speed;
-        //                 break;
-        //             case "right":
-        //                 worldX += speed;
-        //                 break;
-        //         }
-        // }
+
+        if(iceInteract == true) {
+            iceMakeOrBreak();
+        }
     }
 
     public void objectInteraction(int i) {
@@ -231,6 +230,20 @@ public class Player extends Entity {
             }
         }
         gp.keyH.ePressed = false;
+    }
+
+    public void iceMakeOrBreak(){
+        if(iceCounter == 0) {
+            playerWorldCol = gp.player.worldX/gp.tileSize;
+            playerWorldRow = gp.player.worldY/gp.tileSize;
+            playerDirection = direction;
+        }
+        iceCounter++;
+        ice.iceInteraction(playerDirection, playerWorldCol, playerWorldRow, iceCounter, gp);
+        if(iceCounter == 10) {
+            iceCounter = 0;
+            iceInteract = false;
+        }
     }
 
     public void draw(Graphics2D g2) {

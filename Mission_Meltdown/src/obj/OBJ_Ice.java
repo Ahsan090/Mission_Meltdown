@@ -7,6 +7,12 @@ import game.GamePanel;
 
 public class OBJ_Ice extends Entity {
 
+    int iceWorldCol;
+    int iceWorldRow;
+    int tileIndex;
+    String playerDirection;
+    boolean iceBreak = false;
+
     public OBJ_Ice(GamePanel gp) {
         super(gp);
         name = "Ice";
@@ -25,89 +31,187 @@ public class OBJ_Ice extends Entity {
         objectHeight = gp.blockHeight;
         objectOffSetX = 0;
         objectOffSetY = -12;
+
+        isIce = true;
     }
     
 
-    public void iceInteraction(String direction, int playerWorldCol, int playerWorldRow, GamePanel gp) {
+    public void iceInteraction(String direction, int playerWorldCol, int playerWorldRow, int iceCounter, GamePanel gp) {
 
-        // int playerIcePositionX;
-        // int playerIcePositionY;
+        if(iceCounter == 1) {
+            playerDirection = direction;
+            iceWorldCol = playerWorldCol;
+            iceWorldRow = playerWorldRow;
+        }
+        if(iceBreak == false) {
+            switch (playerDirection) {
+                case "up":
+                    iceWorldRow--;
+                    // This part was used to check if the tile's collision is true or false (so then we can place the ice block)
+                    // thou not working properly soo leaving it for now
+                    // tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
+                    // if(gp.tileM.tile[tileIndex].collision == true) {
+                    //     gp.player.iceCounter = 10;
+                    //     break;
+                    // }
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
 
-        switch (direction) {
-            case "up":
-                // gp.player.worldX = playerWorldCol * gp.tileSize;
-                // gp.player.worldY = playerWorldRow * gp.tileSize + gp.tileSize/2;
-                // playerIcePositionX = playerWorldCol * gp.tileSize;
-                // playerIcePositionY = playerWorldRow * gp.tileSize + gp.tileSize/2;
-                // while(gp.player.worldX != playerIcePositionX && gp.player.worldY != playerIcePositionY) {
-                //     if(gp.player.worldX > playerIcePositionX) {
-                //         gp.player.direction = "left";
-                //         gp.player.worldX -= gp.player.speed;
-                //     } else if(gp.player.worldX < playerIcePositionX) {
-                //         gp.player.direction = "right";
-                //         gp.player.worldX += gp.player.speed;
-                //     }
-                //     if(gp.player.worldY < playerIcePositionY) {
-                //         gp.player.direction = "down";
-                //         gp.player.worldY += gp.player.speed;
-                //     }
-                //     if(gp.player.worldY > playerIcePositionY) {
-                //         gp.player.direction = "up";
-                //         gp.player.worldY -= gp.player.speed;
-                //     }
-                // }
-                for(int i = 0; i < 10; i++) {
-                    playerWorldRow--;
-                    if(gp.obj[playerWorldCol][playerWorldRow] != null) {
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        if(iceCounter == 1) {
+                            iceBreak = true;
+                            gp.obj[iceWorldCol][iceWorldRow] = null;
+                            break;
+                        } else if (iceBreak == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+                    }
+                    
+                    gp.obj[iceWorldCol][iceWorldRow] = new OBJ_Ice(gp);
+                    gp.obj[iceWorldCol][iceWorldRow].worldX = iceWorldCol * gp.tileSize;
+                    gp.obj[iceWorldCol][iceWorldRow].worldY = iceWorldRow * gp.tileSize;
+                    break;
+                case "down":
+                    iceWorldRow++;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        if(iceCounter == 1) {
+                            iceBreak = true;
+                            gp.obj[iceWorldCol][iceWorldRow] = null;
+                            break;
+                        } else if (iceBreak == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+                    }
+                    
+                    gp.obj[iceWorldCol][iceWorldRow] = new OBJ_Ice(gp);
+                    gp.obj[iceWorldCol][iceWorldRow].worldX = iceWorldCol * gp.tileSize;
+                    gp.obj[iceWorldCol][iceWorldRow].worldY = iceWorldRow * gp.tileSize;
+                    break;
+                case "left":
+                    iceWorldCol--;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        if(iceCounter == 1) {
+                            iceBreak = true;
+                            gp.obj[iceWorldCol][iceWorldRow] = null;
+                            break;
+                        } else if (iceBreak == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+                    }
+                    
+                    gp.obj[iceWorldCol][iceWorldRow] = new OBJ_Ice(gp);
+                    gp.obj[iceWorldCol][iceWorldRow].worldX = iceWorldCol * gp.tileSize;
+                    gp.obj[iceWorldCol][iceWorldRow].worldY = iceWorldRow * gp.tileSize;
+                    break;
+                case "right":
+                    iceWorldCol++;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        if(iceCounter == 1) {
+                            iceBreak = true;
+                            gp.obj[iceWorldCol][iceWorldRow] = null;
+                            break;
+                        } else if (iceBreak == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+                    }
+                    
+                    gp.obj[iceWorldCol][iceWorldRow] = new OBJ_Ice(gp);
+                    gp.obj[iceWorldCol][iceWorldRow].worldX = iceWorldCol * gp.tileSize;
+                    gp.obj[iceWorldCol][iceWorldRow].worldY = iceWorldRow * gp.tileSize;
+                    break;
+            }
+        } else if(iceBreak == true) {
+            switch (playerDirection) {
+                case "up":
+                    iceWorldRow--;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        gp.obj[iceWorldCol][iceWorldRow] = null;
+                    } else {
+                        gp.player.iceCounter = 10;
+                        iceBreak = false;
                         break;
                     }
-                    gp.obj[playerWorldCol][playerWorldRow] = new OBJ_Ice(gp);
-                    gp.obj[playerWorldCol][playerWorldRow].worldX = playerWorldCol * gp.tileSize;
-                    gp.obj[playerWorldCol][playerWorldRow].worldY = playerWorldRow * gp.tileSize;
-                }
-                break;
-            case "down":
-                // gp.player.worldX = playerWorldCol * gp.tileSize;
-                // gp.player.worldY = playerWorldRow * gp.tileSize + gp.tileSize/2;
-                for(int i = 0; i < 10; i++) {
-                    playerWorldRow++;
-                    if(gp.obj[playerWorldCol][playerWorldRow + 1] != null) {
+                    break;
+                case "down":
+                    iceWorldRow++;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        gp.obj[iceWorldCol][iceWorldRow] = null;
+                    } else {
+                        gp.player.iceCounter = 10;
+                        iceBreak = false;
                         break;
                     }
-                    gp.obj[playerWorldCol][playerWorldRow] = new OBJ_Ice(gp);
-                    gp.obj[playerWorldCol][playerWorldRow].worldX = playerWorldCol * gp.tileSize;
-                    gp.obj[playerWorldCol][playerWorldRow].worldY = playerWorldRow * gp.tileSize;
-                }
-                //gp.player.worldY -= 2;
-                break;
-            case "left":
-                // gp.player.worldX = playerWorldCol * gp.tileSize + 20;
-                // gp.player.worldY = playerWorldRow * gp.tileSize + gp.tileSize/2;
-                for(int i = 0; i < 10; i++) {
-                    playerWorldCol--;
-                    if(gp.obj[playerWorldCol][playerWorldRow] != null) {
+                    break;
+                case "left":
+                    iceWorldCol--;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        gp.obj[iceWorldCol][iceWorldRow] = null;
+                    } else {
+                        gp.player.iceCounter = 10;
+                        iceBreak = false;
                         break;
                     }
-                    gp.obj[playerWorldCol][playerWorldRow] = new OBJ_Ice(gp);
-                    gp.obj[playerWorldCol][playerWorldRow].worldX = playerWorldCol * gp.tileSize;
-                    gp.obj[playerWorldCol][playerWorldRow].worldY = playerWorldRow * gp.tileSize;
-                }
-                //gp.player.worldX += 2;
-                break;
-            case "right":
-                // gp.player.worldX = playerWorldCol * gp.tileSize + gp.tileSize/2;
-                // gp.player.worldY = playerWorldRow * gp.tileSize + gp.tileSize/2;
-                for(int i = 0; i < 10; i++) {
-                    playerWorldCol++;
-                    if(gp.obj[playerWorldCol][playerWorldRow] != null) {
+                    break;
+                case "right":
+                    iceWorldCol++;
+                    if(gp.obj[iceWorldCol][iceWorldRow] != null) {
+                        
+                        if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            gp.player.iceCounter = 10;
+                            break;
+                        }
+
+                        gp.obj[iceWorldCol][iceWorldRow] = null;
+                    } else {
+                        gp.player.iceCounter = 10;
+                        iceBreak = false;
                         break;
                     }
-                    gp.obj[playerWorldCol][playerWorldRow] = new OBJ_Ice(gp);
-                    gp.obj[playerWorldCol][playerWorldRow].worldX = playerWorldCol * gp.tileSize;
-                    gp.obj[playerWorldCol][playerWorldRow].worldY = playerWorldRow * gp.tileSize;
-                }
-                //gp.player.worldX -= 2;
-                break;
+                    break;
+            }
         }
     }
 }

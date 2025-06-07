@@ -43,6 +43,8 @@ public class Entity { // a main class for all the entities in our game (i.e the 
     public int objectOffSetX;
     public int objectOffSetY;
 
+    public boolean isIce = false;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
 
