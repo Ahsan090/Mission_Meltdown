@@ -20,46 +20,34 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[32];
-        mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];
+        tile = new Tile[20];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         loadMap("/res/maps/map01.txt");
     }
 
     public void getTileImage() {
         
-        setupTile(0, "000", false);
-        setupTile(1, "000", false);
-        setupTile(2, "000", false);
-        setupTile(3, "000", false);
-        setupTile(4, "000", false);
-        setupTile(5, "000", false);
-        setupTile(6, "000", false);
-        setupTile(7, "000", false);
-        setupTile(8, "000", false);
-        setupTile(9, "000", false);
-        setupTile(10, "001", false);
-        setupTile(11, "002", false);
+        // Place Holders
+        setupTile(0, "black01", false);
+        setupTile(1, "black01", false);
+        setupTile(2, "black01", false);
+        setupTile(3, "black01", false);
+        setupTile(4, "black01", false);
+        setupTile(5, "black01", false);
+        setupTile(6, "black01", false);
+        setupTile(7, "black01", false);
+        setupTile(8, "black01", false);
+        setupTile(9, "snow01", true);
+
+        // Actual Tiles
+        setupTile(10, "grass01", false);
+        setupTile(11, "grass02", false);
         setupTile(12, "snow01", false);
         setupTile(13, "snow02", false);
         setupTile(14, "snow03", false);
-        setupTile(15, "003", false);
-        setupTile(16, "004", false);
-        setupTile(17, "005", false);
-        setupTile(18, "018", true);
-        setupTile(19, "019", true);
-        setupTile(20, "020", false);
-        setupTile(21, "021", false);
-        setupTile(22, "022", false);
-        setupTile(23, "023", false);
-        setupTile(24, "024", false);
-        setupTile(25, "025", false);
-        setupTile(26, "026", false);
-        setupTile(27, "027", false);
-        setupTile(28, "028", false);
-        setupTile(29, "029", false);
-        setupTile(30, "030", false);
-        setupTile(31, "031", false);
+        setupTile(15, "water01", true);
+        setupTile(16, "water02", true);
     }
 
     public void setupTile(int index, String imagePath, boolean collision) {
@@ -91,7 +79,7 @@ public class TileManager {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
 
-                    mapTileNum[row][col] = num;
+                    mapTileNum[col][row] = num;
                     col++;
                 }
 
@@ -120,7 +108,7 @@ public class TileManager {
 
         while(worldRow < gp.maxWorldRow &&  worldCol < gp.maxWorldCol) {
             
-            tileNum = mapTileNum[worldRow][worldCol];
+            tileNum = mapTileNum[worldCol][worldRow];
 
             worldX = worldCol * gp.tileSize;
             worldY = worldRow * gp.tileSize;

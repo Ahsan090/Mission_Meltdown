@@ -47,13 +47,11 @@ public class OBJ_Ice extends Entity {
             switch (playerDirection) {
                 case "up":
                     iceWorldRow--;
-                    // This part was used to check if the tile's collision is true or false (so then we can place the ice block)
-                    // thou not working properly soo leaving it for now
-                    // tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
-                    // if(gp.tileM.tile[tileIndex].collision == true) {
-                    //     gp.player.iceCounter = 10;
-                    //     break;
-                    // }
+                    tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
+                    if(gp.tileM.tile[tileIndex].collision == true) {
+                        gp.player.iceCounter = 10;
+                        break;
+                    }
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
 
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
@@ -77,6 +75,11 @@ public class OBJ_Ice extends Entity {
                     break;
                 case "down":
                     iceWorldRow++;
+                    tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
+                    if(gp.tileM.tile[tileIndex].collision == true) {
+                        gp.player.iceCounter = 10;
+                        break;
+                    }
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
@@ -100,6 +103,11 @@ public class OBJ_Ice extends Entity {
                     break;
                 case "left":
                     iceWorldCol--;
+                    tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
+                    if(gp.tileM.tile[tileIndex].collision == true) {
+                        gp.player.iceCounter = 10;
+                        break;
+                    }
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
@@ -123,6 +131,11 @@ public class OBJ_Ice extends Entity {
                     break;
                 case "right":
                     iceWorldCol++;
+                    tileIndex = gp.tileM.mapTileNum[iceWorldCol][iceWorldRow];
+                    if(gp.tileM.tile[tileIndex].collision == true) {
+                        gp.player.iceCounter = 10;
+                        break;
+                    }
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
