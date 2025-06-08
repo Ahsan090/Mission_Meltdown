@@ -34,16 +34,17 @@ public class Entity { // a main class for all the entities in our game (i.e the 
     public String dialogue[] = new String[20];
     public int dialogueIndex = 0;
 
+    int screenX2, screenY2;
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
     public boolean isObject = false;
+    public boolean isIce = false;
     public int objectWidth;
     public int objectHeight;
     public int objectOffSetX;
     public int objectOffSetY;
-
-    public boolean isIce = false;
+    public boolean isEnemy = false;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -81,65 +82,76 @@ public class Entity { // a main class for all the entities in our game (i.e the 
 
     public void update() {
         
-        setAction();
-        pixelCounter += speed;
-        if(pixelCounter == 60) {
-            direction = tempDirection;
-            pixelCounter = 0;
-        }
-
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkObject(this, false);
-        gp.cChecker.checkPlayer(this);
-
-        if(collisionOn == false) {
-            switch(direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+        if(isEnemy == true) {
+            
+            setAction();
+            pixelCounter += speed;
+            if(pixelCounter == 60) {
+                direction = tempDirection;
+                pixelCounter = 0;
             }
+            
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+            gp.cChecker.checkObject(this, false);
+            gp.cChecker.checkPlayer(this);
 
-            spriteCounter++;
-            if(spriteCounter > 7) {
-                if(spriteNum == 1) {
-                    spriteNum = 2;
-                } else if(spriteNum == 2) {
-                    spriteNum = 3;
-                } else if(spriteNum == 3) {
-                    spriteNum = 4;
-                } else if(spriteNum == 4) {
-                    spriteNum = 5;
-                } else if(spriteNum == 5) {
-                    spriteNum = 6;
-                } else if(spriteNum == 6) {
-                    spriteNum = 1;
+            if(collisionOn == false) {
+                switch(direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
                 }
 
-                spriteCounter = 0;
+                spriteCounter++;
+                if(spriteCounter > 7) {
+                    if(spriteNum == 1) {
+                        spriteNum = 2;
+                    } else if(spriteNum == 2) {
+                        spriteNum = 3;
+                    } else if(spriteNum == 3) {
+                        spriteNum = 4;
+                    } else if(spriteNum == 4) {
+                        if(direction == "up" || direction == "down") {
+                            spriteNum = 1;
+                        } else{
+                            spriteNum = 5;
+                        }
+                    } else if(spriteNum == 5) {
+                        if(direction == "up" || direction == "down") {
+                            spriteNum = 1;
+                        } else{
+                            spriteNum = 6;
+                        }
+                    } else if(spriteNum == 6) {
+                        spriteNum = 1;
+                    }
+
+                    spriteCounter = 0;
+                }
             }
         }
     }
 
     public void draw(Graphics2D g2) {
 
-        BufferedImage image = null;
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        image = null;
+        screenX2 = worldX - gp.player.worldX + gp.player.screenX;
+        screenY2 = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && 
-            worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && 
-            worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && 
-            worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+        if (worldX + gp.tileSize * 3 > gp.player.worldX - gp.player.screenX && 
+            worldX - gp.tileSize * 3 < gp.player.worldX + gp.player.screenX && 
+            worldY + gp.tileSize * 3 > gp.player.worldY - gp.player.screenY && 
+            worldY - gp.tileSize * 3 < gp.player.worldY + gp.player.screenY) {
 
             switch (direction) {
                 case "up":
@@ -204,13 +216,13 @@ public class Entity { // a main class for all the entities in our game (i.e the 
                     break;
             }
             if(isObject == true) {
-                g2.drawImage(image, screenX + objectOffSetX, screenY + objectOffSetY, objectWidth, objectHeight, null);
-                g2.setColor(Color.red);
-                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+                g2.drawImage(image, screenX2 + objectOffSetX, screenY2 + objectOffSetY, objectWidth, objectHeight, null);
+                // g2.setColor(Color.red);
+                // g2.drawRect(screenX2 + solidArea.x, screenY2 + solidArea.y, solidArea.width, solidArea.height);
             } else {
-                g2.drawImage(image, screenX, screenY, gp.characterWidth, gp.characterHeight, null);
+                g2.drawImage(image, screenX2, screenY2, gp.characterWidth, gp.characterHeight, null);
                 g2.setColor(Color.red);
-                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+                g2.drawRect(screenX2 + solidArea.x, screenY2 + solidArea.y, solidArea.width, solidArea.height);
             }
         }
         

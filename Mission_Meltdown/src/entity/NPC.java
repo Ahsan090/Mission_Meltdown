@@ -1,7 +1,7 @@
 package entity;
 
 import java.awt.Rectangle;
-import java.util.Random;
+//import java.util.Random;
 
 import game.GamePanel;
 
@@ -22,33 +22,30 @@ public class NPC extends Entity{
 
     public void getNPCImage() { // loaded all the sprites (these files are currently for testing purpose only, will change)
         
-        up1 = setupPlayer("/res/player/player_walkup_1-removebg-preview");
-        up2 = setupPlayer("/res/player/player_walkup_2-removebg-preview");
-        up3 = setupPlayer("/res/player/player_walkup_3-removebg-preview");
-        up4 = setupPlayer("/res/player/player_walkup_4-removebg-preview");
-        up5 = up4;
-        up6 = up1;
+        up1 = setupPlayer("/res/player/shaikh_up_0");
+        up2 = setupPlayer("/res/player/shaikh_up_1");
+        up3 = setupPlayer("/res/player/shaikh_up_2");
+        up4 = setupPlayer("/res/player/shaikh_up_3");
 
-        down1 = setupPlayer("/res/player/player_down_1");
-        down2 = setupPlayer("/res/player/player_down_2");
-        down3 = setupPlayer("/res/player/player_down_3");
-        down4 = down2;
-        down5 = down3;
-        down6 = down1;
+        down1 = setupPlayer("/res/player/shaikh_down_0");
+        down2 = setupPlayer("/res/player/shaikh_down_1");
+        down3 = setupPlayer("/res/player/shaikh_down_2");
+        down4 = setupPlayer("/res/player/shaikh_down_3");
 
-        left1 = setupPlayer("/res/player/player_walkleft_1-removebg-preview");
-        left2 = setupPlayer("/res/player/player_walkleft_2-removebg-preview");
-        left3 = setupPlayer("/res/player/player_walkleft_3-removebg-preview");
-        left4 = setupPlayer("/res/player/player_walkleft_4-removebg-preview");
-        left5 = left4;
-        left6 = left1;
+        left1 = setupPlayer("/res/player/shaikh_left_0");
+        left2 = setupPlayer("/res/player/shaikh_left_1");
+        left3 = setupPlayer("/res/player/shaikh_left_2");
+        left4 = setupPlayer("/res/player/shaikh_left_3");
+        left5 = setupPlayer("/res/player/shaikh_left_4");
+        left6 = setupPlayer("/res/player/shaikh_left_5");
 
-        right1 = setupPlayer("/res/player/player_right110");
-        right2 = setupPlayer("/res/player/player_right111");
-        right3 = setupPlayer("/res/player/player_right112");
-        right4 = setupPlayer("/res/player/player_right113");
-        right5 = setupPlayer("/res/player/player_right114");
-        right6 = setupPlayer("/res/player/player_right115");
+        right1 = setupPlayer("/res/player/shaikh_right_0");
+        right2 = setupPlayer("/res/player/shaikh_right_1");
+        right3 = setupPlayer("/res/player/shaikh_right_2");
+        right4 = setupPlayer("/res/player/shaikh_right_3");
+        right5 = setupPlayer("/res/player/shaikh_right_4");
+        right6 = setupPlayer("/res/player/shaikh_right_5");
+
     }
 
     public void setDialogue() {
@@ -57,27 +54,6 @@ public class NPC extends Entity{
         dialogue[1] = "Soo.. What brought you here?";
         dialogue[2] = "Nvm, I don't care enough";
         dialogue[3] = "You know what? I'ma keep talking you can do nothin \nabout it hahahahaha  hehehifaada  huadhau a ahhadahdha dh dwhadn n";
-    }
-
-    public void setAction() {
-        actionLockCounter++;
-
-        if(actionLockCounter == 120) {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-
-            if(i <= 25) {
-                tempDirection = "up";
-            } else if(i <= 50) {
-                tempDirection = "down";
-            } else if(i <= 75) {
-                tempDirection = "left";
-            } else if(i <= 100) {
-                tempDirection = "right";
-            }
-
-            actionLockCounter = 0;
-        }    
     }
 
     public void speak() {

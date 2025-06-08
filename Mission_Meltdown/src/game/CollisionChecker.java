@@ -19,8 +19,12 @@ public class CollisionChecker {
     int entityTopRow;
     int entityBottomRow;
 
+    int objIndex[];
+
     public CollisionChecker(GamePanel gp) {
         this.gp = gp;
+
+        objIndex = new int[2];
     }
 
     public void getPlayerPosition(Entity entity) {
@@ -75,8 +79,9 @@ public class CollisionChecker {
         }
     }
 
-    public int checkObject(Entity entity, boolean player) {
-        int index = 999;
+    public int[] checkObject(Entity entity, boolean player) {
+        objIndex[0] = 999;
+        objIndex[1] = 999;
         
         getPlayerPosition(entity);
 
@@ -86,6 +91,10 @@ public class CollisionChecker {
                 if(gp.obj[entityLeftCol][entityTopRow] != null) {
                     if(gp.obj[entityLeftCol][entityTopRow].collision == true) {
                         entity.collisionOn = true;
+                    }
+                    if(player == true) {
+                        objIndex[0] = entityLeftCol;
+                        objIndex[1] = entityTopRow;
                     }
                 }
                 // objWorldRow--;
@@ -100,6 +109,10 @@ public class CollisionChecker {
                 if(gp.obj[entityLeftCol][entityBottomRow] != null) {
                     if(gp.obj[entityLeftCol][entityBottomRow].collision == true) {
                         entity.collisionOn = true;
+                    }
+                    if(player == true) {
+                        objIndex[0] = entityLeftCol;
+                        objIndex[1] = entityBottomRow;
                     }
                 }
                 // tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
@@ -116,6 +129,10 @@ public class CollisionChecker {
                     if(gp.obj[entityLeftCol][entityTopRow].collision == true) {
                         entity.collisionOn = true;
                     }
+                    if(player == true) {
+                        objIndex[0] = entityLeftCol;
+                        objIndex[1] = entityTopRow;
+                    }
                 }
                 // tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 // tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
@@ -130,6 +147,10 @@ public class CollisionChecker {
                 if(gp.obj[entityRightCol][entityTopRow] != null) {
                     if(gp.obj[entityRightCol][entityTopRow].collision == true) {
                         entity.collisionOn = true;
+                    }
+                    if(player == true) {
+                        objIndex[0] = entityRightCol;
+                        objIndex[1] = entityTopRow;
                     }
                 }
                 // tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
@@ -207,7 +228,7 @@ public class CollisionChecker {
         //     }
         // }
         
-        return index;
+        return objIndex;
     }
 
     public int checkEntity(Entity entity, Entity[] target) {

@@ -14,11 +14,14 @@ public class Player extends Entity {
     KeyHandler keyH;
     OBJ_Ice ice;
 
+    BufferedImage playerImage;
+
     int playerWorldCol;
     int playerWorldRow;
     public int iceCounter = 0;
     String playerDirection;
     public boolean iceInteract = false;
+    public boolean hasKey = false;
 
     public final int screenX, screenY;
     int standCounter = 0;
@@ -47,41 +50,38 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 13;
-        worldY = gp.tileSize * 13;
+        worldX = gp.tileSize * 9;
+        worldY = gp.tileSize * 6;
         speed = 4;
-        direction = "down";
+        direction = "right";
     }
 
     public void getPlayerImage() { // loaded all the sprites (these files are currently for testing purpose only, will change)
         
-        up1 = setupPlayer("/res/player/player_walkup_1-removebg-preview");
-        up2 = setupPlayer("/res/player/player_walkup_2-removebg-preview");
-        up3 = setupPlayer("/res/player/player_walkup_3-removebg-preview");
-        up4 = setupPlayer("/res/player/player_walkup_4-removebg-preview");
-        up5 = up4;
-        up6 = up1;
+        up1 = setupPlayer("/res/player/shaikh_up_0");
+        up2 = setupPlayer("/res/player/shaikh_up_1");
+        up3 = setupPlayer("/res/player/shaikh_up_2");
+        up4 = setupPlayer("/res/player/shaikh_up_3");
 
-        down1 = setupPlayer("/res/player/player_down_1");
-        down2 = setupPlayer("/res/player/player_down_2");
-        down3 = setupPlayer("/res/player/player_down_3");
-        down4 = down2;
-        down5 = down3;
-        down6 = down1;
+        down1 = setupPlayer("/res/player/shaikh_down_0");
+        down2 = setupPlayer("/res/player/shaikh_down_1");
+        down3 = setupPlayer("/res/player/shaikh_down_2");
+        down4 = setupPlayer("/res/player/shaikh_down_3");
 
-        left1 = setupPlayer("/res/player/player_walkleft_1-removebg-preview");
-        left2 = setupPlayer("/res/player/player_walkleft_2-removebg-preview");
-        left3 = setupPlayer("/res/player/player_walkleft_3-removebg-preview");
-        left4 = setupPlayer("/res/player/player_walkleft_4-removebg-preview");
-        left5 = left4;
-        left6 = left1;
+        left1 = setupPlayer("/res/player/shaikh_left_0");
+        left2 = setupPlayer("/res/player/shaikh_left_1");
+        left3 = setupPlayer("/res/player/shaikh_left_2");
+        left4 = setupPlayer("/res/player/shaikh_left_3");
+        left5 = setupPlayer("/res/player/shaikh_left_4");
+        left6 = setupPlayer("/res/player/shaikh_left_5");
 
-        right1 = setupPlayer("/res/player/player_right110");
-        right2 = setupPlayer("/res/player/player_right111");
-        right3 = setupPlayer("/res/player/player_right112");
-        right4 = setupPlayer("/res/player/player_right113");
-        right5 = setupPlayer("/res/player/player_right114");
-        right6 = setupPlayer("/res/player/player_right115");
+        right1 = setupPlayer("/res/player/shaikh_right_0");
+        right2 = setupPlayer("/res/player/shaikh_right_1");
+        right3 = setupPlayer("/res/player/shaikh_right_2");
+        right4 = setupPlayer("/res/player/shaikh_right_3");
+        right5 = setupPlayer("/res/player/shaikh_right_4");
+        right6 = setupPlayer("/res/player/shaikh_right_5");
+
     }
 
     public void update() {
@@ -104,7 +104,7 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this);
 
             // Check Object Collision
-            int objIndex = gp.cChecker.checkObject(this, true);
+            int objIndex[] = gp.cChecker.checkObject(this, true);
             objectInteraction(objIndex);
 
             // Check NPC Collision
@@ -129,7 +129,7 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this);
 
             // Check Object Collision
-            int objIndex = gp.cChecker.checkObject(this, true);
+            int[] objIndex = gp.cChecker.checkObject(this, true);
             objectInteraction(objIndex);
 
             // Check NPC Collision
@@ -165,9 +165,17 @@ public class Player extends Entity {
                 } else if(spriteNum == 3) {
                     spriteNum = 4;
                 } else if(spriteNum == 4) {
-                    spriteNum = 5;
+                    if(direction == "up" || direction == "down") {
+                        spriteNum = 1;
+                    } else{
+                        spriteNum = 5;
+                    }
                 } else if(spriteNum == 5) {
-                    spriteNum = 6;
+                    if(direction == "up" || direction == "down") {
+                        spriteNum = 1;
+                    } else{
+                        spriteNum = 6;
+                    }
                 } else if(spriteNum == 6) {
                     spriteNum = 1;
                 }
@@ -214,11 +222,21 @@ public class Player extends Entity {
         }
     }
 
-    public void objectInteraction(int i) {
-        if(i != 999) {
-            // something
-        } else {
-            // jja
+    public void objectInteraction(int objIndex[]) {
+        if(objIndex[0] != 999) {
+            if(gp.obj[objIndex[0]][objIndex[1]].name.equals("Key")) {
+                gp.obj[objIndex[0]][objIndex[1]] = null;
+                hasKey = true;
+                gp.ui.showMessage("You got the key");
+            } else if(gp.obj[objIndex[0]][objIndex[1]].name.equals("Door")) {
+                if(hasKey == true){
+                    gp.obj[12][18] = null;
+                    gp.obj[13][18] = null;
+                    gp.ui.showMessage("You opened the door");
+                } else {
+                    gp.ui.showMessage("You need a key");
+                }
+            }
         }
     }
 
@@ -250,72 +268,72 @@ public class Player extends Entity {
         // g2.setColor(Color.white);
         // g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 
-        BufferedImage image = null;
+        playerImage = null;
 
         switch (direction) {
             case "up":
                 if(spriteNum == 1) {
-                    image = up1;
+                    playerImage = up1;
                 } else if(spriteNum == 2) {
-                    image = up2;
+                    playerImage = up2;
                 } else if(spriteNum == 3) {
-                    image = up3;
+                    playerImage = up3;
                 } else if(spriteNum == 4) {
-                    image = up4;
+                    playerImage = up4;
                 } else if(spriteNum == 5) {
-                    image = up5;
+                    playerImage = up5;
                 } else if(spriteNum == 6) {
-                    image = up6;
+                    playerImage = up6;
                 }
                 break;
             case "down":
                 if(spriteNum == 1) {
-                    image = down1;
+                    playerImage = down1;
                 } else if(spriteNum == 2) {
-                    image = down2;
+                    playerImage = down2;
                 } else if(spriteNum == 3) {
-                    image = down3;
+                    playerImage = down3;
                 } else if(spriteNum == 4) {
-                    image = down4;
+                    playerImage = down4;
                 } else if(spriteNum == 5) {
-                    image = down5;
+                    playerImage = down5;
                 } else if(spriteNum == 6) {
-                    image = down6;
+                    playerImage = down6;
                 }
                 break;
             case "left":
                 if(spriteNum == 1) {
-                    image = left1;
+                    playerImage = left1;
                 } else if(spriteNum == 2) {
-                    image = left2;
+                    playerImage = left2;
                 } else if(spriteNum == 3) {
-                    image = left3;
+                    playerImage = left3;
                 } else if(spriteNum == 4) {
-                    image = left4;
+                    playerImage = left4;
                 } else if(spriteNum == 5) {
-                    image = left5;
+                    playerImage = left5;
                 } else if(spriteNum == 6) {
-                    image = left6;
+                    playerImage = left6;
                 }
                 break;
             case "right":
                 if(spriteNum == 1) {
-                    image = right1;
+                    playerImage = right1;
                 } else if(spriteNum == 2) {
-                    image = right2;
+                    playerImage = right2;
                 } else if(spriteNum == 3) {
-                    image = right3;
+                    playerImage = right3;
                 } else if(spriteNum == 4) {
-                    image = right4;
+                    playerImage = right4;
                 } else if(spriteNum == 5) {
-                    image = right5;
+                    playerImage = right5;
                 } else if(spriteNum == 6) {
-                    image = right6;
+                    playerImage = right6;
                 }
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY - 28, gp.characterWidth, gp.characterHeight, null);
+        g2.drawImage(playerImage, screenX, screenY - 28, gp.characterWidth, gp.characterHeight, null);
         g2.setColor(Color.red);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }

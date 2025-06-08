@@ -14,16 +14,16 @@ public class OBJ_House extends Entity {
 
         solidArea = new Rectangle();
         solidArea.x = 0;
-        solidArea.y = 0;
-        solidArea.width = 89;
-        solidArea.height = 91;
+        solidArea.y = -gp.tileSize;
+        solidArea.width = 60;
+        solidArea.height = 60;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        collision = true;
+        collision = false;
         isObject = true;
-        objectWidth = 89;
-        objectHeight = 91;
-        objectOffSetX = 0;
-        objectOffSetY = 0;
+        objectWidth = 240;
+        objectHeight = 240;
+        objectOffSetX = 5;
+        objectOffSetY = -gp.tileSize * 2;
     }
 }

@@ -13,17 +13,17 @@ public class OBJ_Igloo extends Entity{
         down1 = setup("/res/objects/igloo", gp.tileSize, gp.tileSize);
 
         solidArea = new Rectangle();
-        solidArea.x = 0;
-        solidArea.y = 0;
-        solidArea.width = 300;
-        solidArea.height = 300;
+        solidArea.x = -gp.tileSize * 2;
+        solidArea.y = -gp.tileSize * 2;
+        solidArea.width = 60;
+        solidArea.height = 60;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        collision = true;
+        collision = false;
         isObject = true;
         objectWidth = 300;
         objectHeight = 300;
-        objectOffSetX = 0;
-        objectOffSetY = 0;
+        objectOffSetX = -gp.tileSize * 2;
+        objectOffSetY = -gp.tileSize * 2;
     }
 }

@@ -52,7 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsManager assetsM = new AssetsManager(this);
     public Entity obj[][] = new Entity[92][90];
-    public Entity npc[] = new Entity[10];
+    public Entity npc[] = new Entity[8];
+    public Entity npc_e[] = new Entity[8];
     public EventHandler eHandler = new EventHandler(this);
     public UI ui = new UI(this);
 
@@ -128,8 +129,11 @@ public class GamePanel extends JPanel implements Runnable {
                 if(npc[i] != null) {
                     npc[i].update();
                 }
-            }
 
+                if(npc_e[i] != null) {
+                    npc_e[i].update();
+                }
+            }
             
         } else if(gameState == pauseState){
             //pause the game
@@ -152,6 +156,9 @@ public class GamePanel extends JPanel implements Runnable {
             for(int i = 0; i < npc.length; i++) {
                 if(npc[i] != null) {
                     entityList.add(npc[i]);
+                }
+                if(npc_e[i] != null) {
+                    entityList.add(npc_e[i]);
                 }
             }
 

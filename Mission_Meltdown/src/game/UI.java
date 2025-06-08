@@ -49,6 +49,19 @@ public class UI {
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40F));
+
+        if(messageOn == true) {
+            g2.setColor(Color.gray);
+            g2.drawString(message, gp.tileSize/2 + 2, gp.tileSize*5 + 2);
+            g2.setColor(Color.white);
+            g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
+
+            messageCounter++;
+            if(messageCounter == 120) {
+                messageCounter = 0;
+                messageOn = false;
+            }
+        }
         
         if(gp.gameState == gp.titleState) {
             drawTitleScreen();
