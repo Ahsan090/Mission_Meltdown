@@ -29,7 +29,7 @@ public class Player extends Entity {
     int pixelCounter = 0;
     public boolean turn = false;
     public int turnCounter = 0;
-    public int dialogueCount = 0;
+    public int dialogueCount = -1;
     public int npcNum = 7;
     public boolean continueDialogue = false;
     // boolean lockMove = false;
@@ -245,20 +245,19 @@ public class Player extends Entity {
 
     public void npcInteraction(int i) {
         if(i != 999 || npcNum != 7) {
-            if(gp.keyH.ePressed == true || gp.keyH.spacePressed) {
+            if(gp.keyH.ePressed == true || gp.keyH.spacePressed == true) {
                 gp.gameState = gp.dialogueState;
-                dialogueCount = 0;
+                dialogueCount = -1;
                 npcNum = i;
-                gp.npc[i].speak();
             }
             continueDialogue = true;
-
+            
             dialogueCount++;
             if(gp.npc[npcNum] != null && gp.npc[npcNum].dialogue[dialogueCount] != null) {
-                gp.npc[npcNum].speak();
+                gp.npc[npcNum].speak(dialogueCount);
             } else {
                 continueDialogue = false;
-                dialogueCount = 0;
+                dialogueCount = -1;
                 npcNum = 7;
             }
         }
@@ -274,6 +273,7 @@ public class Player extends Entity {
         iceCounter++;
         ice.iceInteraction(playerDirection, playerWorldCol, playerWorldRow, iceCounter, gp);
         if(iceCounter == 10) {
+            ice.iceBreak = false;
             iceCounter = 0;
             iceInteract = false;
         }

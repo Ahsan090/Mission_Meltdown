@@ -37,8 +37,8 @@ public class NPC extends Entity{
         // dialogue[3] = "You know what? I'ma keep talking you can do nothin \nabout it hahahahaha  hehehifaada  huadhau a ahhadahdha dh dwhadn n";
     }
 
-    public void speak() {
+    public void speak(int dialogueCounter) {
         
-        super.speak();
+        super.speak(dialogueCounter);
     }
 }

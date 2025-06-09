@@ -76,8 +76,10 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE) {
                 if(gp.player.continueDialogue == false) {
                     gp.gameState = gp.playState;
+                    spacePressed = false;
                 } else {
                     gp.player.npcInteraction(999);
+                    spacePressed = false;
                 }
             }
         }

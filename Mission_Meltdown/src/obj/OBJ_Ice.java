@@ -11,7 +11,7 @@ public class OBJ_Ice extends Entity {
     int iceWorldRow;
     int tileIndex;
     String playerDirection;
-    boolean iceBreak = false;
+    public boolean iceBreak = false;
 
     public OBJ_Ice(GamePanel gp) {
         super(gp);
@@ -165,6 +165,7 @@ public class OBJ_Ice extends Entity {
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            iceBreak = false;
                             gp.player.iceCounter = 10;
                             break;
                         }
@@ -181,6 +182,7 @@ public class OBJ_Ice extends Entity {
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            iceBreak = false;
                             gp.player.iceCounter = 10;
                             break;
                         }
@@ -197,6 +199,7 @@ public class OBJ_Ice extends Entity {
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            iceBreak = false;
                             gp.player.iceCounter = 10;
                             break;
                         }
@@ -213,6 +216,7 @@ public class OBJ_Ice extends Entity {
                     if(gp.obj[iceWorldCol][iceWorldRow] != null) {
                         
                         if(gp.obj[iceWorldCol][iceWorldRow].isIce == false) {
+                            iceBreak = false;
                             gp.player.iceCounter = 10;
                             break;
                         }

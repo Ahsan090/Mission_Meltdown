@@ -80,8 +80,8 @@ public class NPC_Enemy extends Entity{
         }    
     }
 
-    public void speak() {
+    public void speak(int dialogueCounter) {
         
-        super.speak();
+        super.speak(dialogueCounter);
     }
 }

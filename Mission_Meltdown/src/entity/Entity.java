@@ -56,13 +56,13 @@ public class Entity { // a main class for all the entities in our game (i.e the 
     }
 
     public void setAction() {}
-    public void speak() {
+    public void speak(int dialogueCounter) {
 
-        if(dialogue[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
-        gp.ui.currentDialogue = dialogue[dialogueIndex];
-        dialogueIndex++;
+        // if(dialogue[dialogueIndex] == null) {
+        //     dialogueIndex = 0;
+        // }
+        gp.ui.currentDialogue = dialogue[dialogueCounter];
+        // dialogueIndex++;
 
         switch (gp.player.direction) {
             case "up":

@@ -279,13 +279,13 @@ public class AssetsManager {
         setAsset(17, 19, "lamppost");
         setAsset(19, 19, "house");
         setAsset(24, 19, "house3");
-        setAsset(30, 19, "well");
         setAsset(35, 19, "boundary");
         setAsset(38, 19, "boundary");
         setAsset(39, 19, "house2");
         setAsset(43, 20, "house3");
 
         setAsset(9, 20, "boundary");
+        setAsset(30, 20, "well");
         setAsset(35, 20, "boundary");
         setAsset(38, 20, "boundary");
         
@@ -425,18 +425,15 @@ public class AssetsManager {
         gp.npc[5].worldX = gp.tileSize * 31;
         gp.npc[5].worldY = gp.tileSize * 7;
         gp.npc[5].direction = "right";
-        gp.npc[5].dialogue[0] = "Friend: Take Care!";
-        gp.npc[5].dialogue[1] = "Shaikh Shab: You too!";
-        gp.npc[5].dialogue[2] = "Shaikh Shab: guess I'll should go now";
-        gp.npc[5].dialogue[3] = "Shaikh Shab: HEY MY DUDE! Wazz Up?";
-        gp.npc[5].dialogue[4] = "Friend: Whoa—Is that really you? I thought you'd never make it.";
-        gp.npc[5].dialogue[5] = "Shaikh Shab: Where is everyone else?";
-        gp.npc[5].dialogue[6] = "Friend: This place... it's not the same anymore.";
-        gp.npc[5].dialogue[7] = "Shaikh Shab: What?.. Why?..";
-        gp.npc[5].dialogue[8] = "Friend: The Chai folk came out of nowhere... first it was a trade\n        dispute, then they just started freezing us out—literally.";
-        gp.npc[5].dialogue[9] = "Friend: They want the heart of the village. Our land, our recipes...\n        everything.";
-        gp.npc[5].dialogue[10] = "Shaikh Shab: That's not right.";
-        gp.npc[5].dialogue[11] = "Shaikh Shab: I'll look into it.";
+        gp.npc[5].dialogue[0] = "Shaikh Shab: HEY MY DUDE! Wazz Up?";
+        gp.npc[5].dialogue[1] = "Friend: Whoa—Is that really you? I thought you'd never make it.";
+        gp.npc[5].dialogue[2] = "Shaikh Shab: Where is everyone else?";
+        gp.npc[5].dialogue[3] = "Friend: This place... it's not the same anymore.";
+        gp.npc[5].dialogue[4] = "Shaikh Shab: What?.. Why?..";
+        gp.npc[5].dialogue[5] = "Friend: The Chai folk came out of nowhere... first it was a trade\n        dispute, then they just started freezing us out—literally.";
+        gp.npc[5].dialogue[6] = "Friend: They want the heart of the village. Our land, our recipes...\n        everything.";
+        gp.npc[5].dialogue[7] = "Shaikh Shab: That's not right.";
+        gp.npc[5].dialogue[8] = "Shaikh Shab: I'll look into it.";
 
         gp.npc[6] = new NPC(gp);
         gp.npc[6].worldX = gp.tileSize * 32;
