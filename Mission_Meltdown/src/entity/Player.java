@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Color;
+//import java.awt.Color;
 //import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,6 +29,9 @@ public class Player extends Entity {
     int pixelCounter = 0;
     public boolean turn = false;
     public int turnCounter = 0;
+    public int dialogueCount = 0;
+    public int npcNum = 7;
+    public boolean continueDialogue = false;
     // boolean lockMove = false;
     // int moveLockCounter = 0;
 
@@ -241,10 +244,22 @@ public class Player extends Entity {
     }
 
     public void npcInteraction(int i) {
-        if(i != 999) {
-            if(gp.keyH.ePressed == true) {
+        if(i != 999 || npcNum != 7) {
+            if(gp.keyH.ePressed == true || gp.keyH.spacePressed) {
                 gp.gameState = gp.dialogueState;
+                dialogueCount = 0;
+                npcNum = i;
                 gp.npc[i].speak();
+            }
+            continueDialogue = true;
+
+            dialogueCount++;
+            if(gp.npc[npcNum] != null && gp.npc[npcNum].dialogue[dialogueCount] != null) {
+                gp.npc[npcNum].speak();
+            } else {
+                continueDialogue = false;
+                dialogueCount = 0;
+                npcNum = 7;
             }
         }
         gp.keyH.ePressed = false;
@@ -334,7 +349,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(playerImage, screenX, screenY - 28, gp.characterWidth, gp.characterHeight, null);
-        g2.setColor(Color.red);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        // g2.setColor(Color.red);
+        // g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }

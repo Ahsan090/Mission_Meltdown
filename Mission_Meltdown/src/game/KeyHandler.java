@@ -64,7 +64,7 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_P || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.pauseState;
             }
-            if(code == KeyEvent.VK_E) {
+            if(code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE) {
                 ePressed = true;
             }
             
@@ -74,7 +74,11 @@ public class KeyHandler implements KeyListener {
             }
         } else if(gp.gameState == gp.dialogueState) {
             if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE) {
-                gp.gameState = gp.playState;
+                if(gp.player.continueDialogue == false) {
+                    gp.gameState = gp.playState;
+                } else {
+                    gp.player.npcInteraction(999);
+                }
             }
         }
     }

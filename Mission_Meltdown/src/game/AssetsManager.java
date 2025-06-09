@@ -396,34 +396,47 @@ public class AssetsManager {
 
     public void setNPC() {
 
-        gp.npc[0] = new NPC(gp);
-        gp.npc[0].worldX = gp.tileSize * 13;
-        gp.npc[0].worldY = gp.tileSize * 6;
 
         gp.npc[1] = new NPC(gp);
         gp.npc[1].worldX = gp.tileSize * 21;
         gp.npc[1].worldY = gp.tileSize * 6;
         gp.npc[1].direction = "right";
+        gp.npc[1].dialogue[0] = "...It's too quiet these days...";
 
         gp.npc[2] = new NPC(gp);
         gp.npc[2].worldX = gp.tileSize * 22;
         gp.npc[2].worldY = gp.tileSize * 6;
         gp.npc[2].direction = "left";
+        gp.npc[2].dialogue[0] = "They're... watching.";
 
         gp.npc[3] = new NPC(gp);
         gp.npc[3].worldX = gp.tileSize * 34;
         gp.npc[3].worldY = gp.tileSize * 8;
         gp.npc[3].direction = "left";
+        gp.npc[3].dialogue[0] = "Don't trust anyone... not anymore.";
 
         gp.npc[4] = new NPC(gp);
         gp.npc[4].worldX = gp.tileSize * 33;
         gp.npc[4].worldY = gp.tileSize * 7;
         gp.npc[4].direction = "left";
+        gp.npc[4].dialogue[0] = "...It's too quiet these days...";
 
         gp.npc[5] = new NPC(gp);
         gp.npc[5].worldX = gp.tileSize * 31;
         gp.npc[5].worldY = gp.tileSize * 7;
         gp.npc[5].direction = "right";
+        gp.npc[5].dialogue[0] = "Friend: Take Care!";
+        gp.npc[5].dialogue[1] = "Shaikh Shab: You too!";
+        gp.npc[5].dialogue[2] = "Shaikh Shab: guess I'll should go now";
+        gp.npc[5].dialogue[3] = "Shaikh Shab: HEY MY DUDE! Wazz Up?";
+        gp.npc[5].dialogue[4] = "Friend: Whoa—Is that really you? I thought you'd never make it.";
+        gp.npc[5].dialogue[5] = "Shaikh Shab: Where is everyone else?";
+        gp.npc[5].dialogue[6] = "Friend: This place... it's not the same anymore.";
+        gp.npc[5].dialogue[7] = "Shaikh Shab: What?.. Why?..";
+        gp.npc[5].dialogue[8] = "Friend: The Chai folk came out of nowhere... first it was a trade\n        dispute, then they just started freezing us out—literally.";
+        gp.npc[5].dialogue[9] = "Friend: They want the heart of the village. Our land, our recipes...\n        everything.";
+        gp.npc[5].dialogue[10] = "Shaikh Shab: That's not right.";
+        gp.npc[5].dialogue[11] = "Shaikh Shab: I'll look into it.";
 
         gp.npc[6] = new NPC(gp);
         gp.npc[6].worldX = gp.tileSize * 32;
@@ -437,6 +450,10 @@ public class AssetsManager {
         gp.npc_e[1] = new NPC_Enemy(gp);
         gp.npc_e[1].worldX = gp.tileSize * 31;
         gp.npc_e[1].worldY = gp.tileSize * 16;
+
+        gp.npc_e[2] = new NPC_Enemy(gp);
+        gp.npc_e[2].worldX = gp.tileSize * 31;
+        gp.npc_e[2].worldY = gp.tileSize * 22;
 
     }
 }

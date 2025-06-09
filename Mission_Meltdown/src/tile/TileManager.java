@@ -37,7 +37,7 @@ public class TileManager {
         setupTile(5, "black01", false);
         setupTile(6, "black01", false);
         setupTile(7, "black01", false);
-        setupTile(8, "grass01", false);
+        setupTile(8, "grass01", true);
         setupTile(9, "snow01", true);
 
         // Actual Tiles
