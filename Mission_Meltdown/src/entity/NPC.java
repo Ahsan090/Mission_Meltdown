@@ -7,7 +7,9 @@ import game.GamePanel;
 
 public class NPC extends Entity{
 
-    public NPC(GamePanel gp) {
+    public int npcType;
+
+    public NPC(GamePanel gp, int npcType) {
         super(gp);
 
         speed = 2;
@@ -15,17 +17,25 @@ public class NPC extends Entity{
         solidArea = new Rectangle(0, 0, 60, 60);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+
+        this.npcType = npcType;
         
         getNPCImage();
         setDialogue();
     }
 
     public void getNPCImage() { // loaded all the sprites (these files are currently for testing purpose only, will change)
-        
-        up1 = setupPlayer("/res/player/shaikh_up_0");
-        down1 = setupPlayer("/res/player/shaikh_down_0");
-        left1 = setupPlayer("/res/player/shaikh_left_0");
-        right1 = setupPlayer("/res/player/shaikh_right_0");
+        if(npcType == 1) {
+            up1 = setupPlayer("/res/npc/npc_green_up");
+            down1 = setupPlayer("/res/npc/npc_green_down");
+            left1 = setupPlayer("/res/npc/npc_green_left");
+            right1 = setupPlayer("/res/npc/npc_green_right");
+        } else if(npcType == 2) {
+            up1 = setupPlayer("/res/npc/npc_yellow_up");
+            down1 = setupPlayer("/res/npc/npc_yellow_down");
+            left1 = setupPlayer("/res/npc/npc_yellow_left");
+            right1 = setupPlayer("/res/npc/npc_yellow_right");
+        }
 
     }
 

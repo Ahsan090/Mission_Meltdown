@@ -397,31 +397,31 @@ public class AssetsManager {
     public void setNPC() {
 
 
-        gp.npc[1] = new NPC(gp);
+        gp.npc[1] = new NPC(gp, 1);
         gp.npc[1].worldX = gp.tileSize * 21;
         gp.npc[1].worldY = gp.tileSize * 6;
         gp.npc[1].direction = "right";
         gp.npc[1].dialogue[0] = "...It's too quiet these days...";
 
-        gp.npc[2] = new NPC(gp);
+        gp.npc[2] = new NPC(gp, 1);
         gp.npc[2].worldX = gp.tileSize * 22;
         gp.npc[2].worldY = gp.tileSize * 6;
         gp.npc[2].direction = "left";
         gp.npc[2].dialogue[0] = "They're... watching.";
 
-        gp.npc[3] = new NPC(gp);
+        gp.npc[3] = new NPC(gp, 1);
         gp.npc[3].worldX = gp.tileSize * 34;
         gp.npc[3].worldY = gp.tileSize * 8;
         gp.npc[3].direction = "left";
         gp.npc[3].dialogue[0] = "Don't trust anyone... not anymore.";
 
-        gp.npc[4] = new NPC(gp);
+        gp.npc[4] = new NPC(gp, 2);
         gp.npc[4].worldX = gp.tileSize * 33;
         gp.npc[4].worldY = gp.tileSize * 7;
         gp.npc[4].direction = "left";
         gp.npc[4].dialogue[0] = "...It's too quiet these days...";
 
-        gp.npc[5] = new NPC(gp);
+        gp.npc[5] = new NPC(gp, 2);
         gp.npc[5].worldX = gp.tileSize * 31;
         gp.npc[5].worldY = gp.tileSize * 7;
         gp.npc[5].direction = "right";
@@ -435,7 +435,7 @@ public class AssetsManager {
         gp.npc[5].dialogue[7] = "Shaikh Shab: That's not right.";
         gp.npc[5].dialogue[8] = "Shaikh Shab: I'll look into it.";
 
-        gp.npc[6] = new NPC(gp);
+        gp.npc[6] = new NPC(gp, 1);
         gp.npc[6].worldX = gp.tileSize * 32;
         gp.npc[6].worldY = gp.tileSize * 6;
         gp.npc[6].direction = "down";

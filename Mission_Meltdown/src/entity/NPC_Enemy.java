@@ -12,7 +12,7 @@ public class NPC_Enemy extends Entity{
 
         speed = 2;
         direction = "down";
-        solidArea = new Rectangle(2, 28, 56, 56);
+        solidArea = new Rectangle(2, 0, 56, 58);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         isEnemy = true;
