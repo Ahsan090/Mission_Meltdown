@@ -217,8 +217,8 @@ public class Entity { // a main class for all the entities in our game (i.e the 
             }
             if(isObject == true) {
                 g2.drawImage(image, screenX2 + objectOffSetX, screenY2 + objectOffSetY, objectWidth, objectHeight, null);
-                // g2.setColor(Color.red);
-                // g2.drawRect(screenX2 + solidArea.x, screenY2 + solidArea.y, solidArea.width, solidArea.height);
+                g2.setColor(Color.red);
+                g2.drawRect(screenX2 + solidArea.x, screenY2 + solidArea.y, solidArea.width, solidArea.height);
             } else {
                 g2.drawImage(image, screenX2, screenY2, gp.characterWidth, gp.characterHeight, null);
                 g2.setColor(Color.red);

@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetsManager assetsM = new AssetsManager(this);
-    public Entity obj[][] = new Entity[92][90];
+    public Entity obj[][] = new Entity[maxWorldCol][maxWorldRow];
     public Entity npc[] = new Entity[8];
     public Entity npc_e[] = new Entity[8];
     public EventHandler eHandler = new EventHandler(this);

@@ -281,9 +281,9 @@ public class Player extends Entity {
                 } else if(spriteNum == 4) {
                     playerImage = up4;
                 } else if(spriteNum == 5) {
-                    playerImage = up5;
+                    playerImage = up1;
                 } else if(spriteNum == 6) {
-                    playerImage = up6;
+                    playerImage = up1;
                 }
                 break;
             case "down":
@@ -296,9 +296,9 @@ public class Player extends Entity {
                 } else if(spriteNum == 4) {
                     playerImage = down4;
                 } else if(spriteNum == 5) {
-                    playerImage = down5;
+                    playerImage = down1;
                 } else if(spriteNum == 6) {
-                    playerImage = down6;
+                    playerImage = down1;
                 }
                 break;
             case "left":
